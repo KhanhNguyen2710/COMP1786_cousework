@@ -2,14 +2,17 @@ package com.example.myapplication.Fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +39,6 @@ public class AddFragment extends Fragment {
 private View view;
     private HikeDatabase hikeDatabase;
     public AddFragment() {
-        // Required empty public constructor
     }
     @Nullable
     @Override
@@ -48,7 +50,6 @@ private View view;
                 .build();
 
         view = rootView;
-
 // Spinner
         Spinner spinnerLevel = view.findViewById(R.id.spinnerLevel);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.levels_array, android.R.layout.simple_spinner_item);
@@ -56,18 +57,14 @@ private View view;
         spinnerLevel.setAdapter(adapter);
 
 //date
-
-//        TextView Date = view.findViewById(R.id.Date);
         TextView Date = view.findViewById(R.id.Date);
         Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Mở DatePickerDialogFragment khi nhấp vào TextView Date
                 showDatePickerDialog();
             }
         });
 
-//
         EditText editName = view.findViewById(R.id.editName);
         EditText editLocation = view.findViewById(R.id.editLocation);
         EditText editDescription = view.findViewById(R.id.editDescription);
@@ -90,22 +87,25 @@ private View view;
                 int selectedRadioButtonId = radioGroupParking.getCheckedRadioButtonId();
                 boolean parkingAvailable = (selectedRadioButtonId == R.id.checkYes);
 
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(location) || TextUtils.isEmpty(length) || TextUtils.isEmpty(selectedLevel)) {
+                    //  yêu cầu nhập đủ thông tin
+                    Toast.makeText(requireContext(), "Please enter all required information", Toast.LENGTH_SHORT).show();
+                } else {
 
-                Hike hike = new Hike();
-                hike.name= name;
-                hike.location= location;
-                hike.date= date;
-                hike.length= length;
-                hike.level = selectedLevel;
-                hike.description= description;
-                hike.parkingAvailable= parkingAvailable;
+                    Hike hike = new Hike();
+                    hike.name = name;
+                    hike.location = location;
+                    hike.date = date;
+                    hike.length = length;
+                    hike.level = selectedLevel;
+                    hike.description = description;
+                    hike.parkingAvailable = parkingAvailable;
 
-                // Set properties of the Hike object based on the user input
-
-                long hike_id = hikeDatabase.hikeDao().insertHike(hike);
-
-                Toast.makeText(requireContext(), "Hike has been created with id: " + hike_id,
-                        Toast.LENGTH_LONG).show();
+//                long hike_id = hikeDatabase.hikeDao().insertHike(hike);
+                    displayNextAlert(hike);
+//                Toast.makeText(requireContext(), "Hike has been created with id: " + hike_id,
+//                        Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -118,7 +118,6 @@ private View view;
         datePickerFragment.show(getChildFragmentManager(), "datePicker");
     }
 
-    // Cập nhật TextView Date sau khi chọn ngày
     public void updateDateTextView(int year, int month, int day) {
         TextView Date = view.findViewById(R.id.Date);
         String formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", month + 1, day, year);
@@ -126,5 +125,39 @@ private View view;
     }
 
 
+    public void displayNextAlert(Hike hike) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Hike Created Successfully");
+        builder .setMessage(
+                "Details \n" +
+                        "\nName: " + hike.name + "\n" +
+                        "\nLocation: " +  hike.location + "\n" +
+                        "\nDate: " +  hike.date + "\n" +
+                        "\nParking available: " +  (hike.parkingAvailable ? "yes":"No") + "\n" +
+                        "\nLength of the hike: " +  hike.length + "\n" +
+                        "\nDifficulty Level: " +  hike.level + "\n" +
+                        "\nDescription: " +  hike.description + "\n"
+        );
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                saveDataToDatabase(hike);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void saveDataToDatabase(Hike hike) {
+        long hike_id = hikeDatabase.hikeDao().insertHike(hike);
+        Toast.makeText(requireContext(), "Hike has been saved with ID: " + hike_id, Toast.LENGTH_LONG).show();
+    }
 
 }

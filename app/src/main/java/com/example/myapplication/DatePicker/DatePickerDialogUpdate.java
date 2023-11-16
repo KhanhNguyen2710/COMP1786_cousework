@@ -1,8 +1,5 @@
 package com.example.myapplication.DatePicker;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -12,11 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.myapplication.Activities.UpdateHikeActivity;
 import com.example.myapplication.Fragment.AddFragment;
 
 import java.util.Calendar;
 
-public class DatePickerDialogFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerDialogUpdate extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     @NonNull
     @Override
@@ -32,8 +30,7 @@ public class DatePickerDialogFragment extends DialogFragment implements DatePick
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        // Gửi ngày được chọn về fragment
-        ((AddFragment) getParentFragment()).updateDateTextView(year, month, dayOfMonth);
+        ((UpdateHikeActivity) getActivity()).updateDateView(year, month, dayOfMonth);
     }
 
 }

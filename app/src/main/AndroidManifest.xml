@@ -13,6 +13,10 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.UpdateHikeActivity"
+            android:exported="false"
+            android:parentActivityName=".Activities.MainActivity"/>
+        <activity
             android:name=".Fragment.HomeFragment"
             android:exported="false" />
         <activity
