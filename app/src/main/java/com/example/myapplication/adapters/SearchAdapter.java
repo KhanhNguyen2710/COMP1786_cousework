@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
-    private List<Hike> originalHikes; // Danh sách chuyến đi gốc (không thay đổi)
-    private List<Hike> filteredHikes; // Danh sách chuyến đi hiển thị (có thể bị lọc)
+    private List<Hike> originalHikes; // ds gốc
+    private List<Hike> filteredHikes; // Danh sách hiển thị (có thể bị lọc)
 
     public SearchAdapter(List<Hike> hikes) {
         this.originalHikes = hikes;

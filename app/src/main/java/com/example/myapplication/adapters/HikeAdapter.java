@@ -34,7 +34,6 @@ public class HikeAdapter extends RecyclerView.Adapter<HikeAdapter.HikeViewHolder
         this.hikes = hikes;
         this.onDeleteClickListener = onDeleteClickListener;
         this.onMoreClickListener = onMoreClickListener;
-
     }
 
     @NonNull

@@ -28,8 +28,6 @@ public class UpdateHikeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_hike);
-
-
         // Lấy dữ liệu từ Intent
         long hikeId = getIntent().getLongExtra("hike_id", -1);
 
@@ -38,8 +36,6 @@ public class UpdateHikeActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
         Hike hike = hikeDatabase.hikeDao().getHikeById(hikeId);
-
-
 
         // Hiển thị thông tin trong form
         EditText updateName = findViewById(R.id.updateName);
@@ -59,7 +55,6 @@ public class UpdateHikeActivity extends AppCompatActivity {
             checkNo.setChecked(true);
         }
 
-
         Spinner updateSpinnerLevel = findViewById(R.id.updateSpinnerLevel);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.levels_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -67,7 +62,6 @@ public class UpdateHikeActivity extends AppCompatActivity {
         //
         int position = adapter.getPosition(hike.level);
         updateSpinnerLevel.setSelection(position);
-
 
         updateName.setText(hike.name);
         updateLocation.setText(hike.location);

@@ -36,7 +36,7 @@ import java.util.Locale;
 
 public class AddFragment extends Fragment {
 
-private View view;
+    private View view;
     private HikeDatabase hikeDatabase;
     public AddFragment() {
     }
@@ -55,7 +55,6 @@ private View view;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(), R.array.levels_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLevel.setAdapter(adapter);
-
 //date
         TextView Date = view.findViewById(R.id.Date);
         Date.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +75,6 @@ private View view;
             @Override
             public void onClick(View v) {
 //                saveToDatabase();
-// lấy văn bản
                 String name = editName.getText().toString();
                 String location = editLocation.getText().toString();
                 String date = Date.getText().toString();
@@ -88,7 +86,6 @@ private View view;
                 boolean parkingAvailable = (selectedRadioButtonId == R.id.checkYes);
 
                 if (TextUtils.isEmpty(name) || TextUtils.isEmpty(location) || TextUtils.isEmpty(length) || TextUtils.isEmpty(selectedLevel)) {
-                    //  yêu cầu nhập đủ thông tin
                     Toast.makeText(requireContext(), "Please enter all required information", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -101,10 +98,7 @@ private View view;
                     hike.description = description;
                     hike.parkingAvailable = parkingAvailable;
 
-//                long hike_id = hikeDatabase.hikeDao().insertHike(hike);
                     displayNextAlert(hike);
-//                Toast.makeText(requireContext(), "Hike has been created with id: " + hike_id,
-//                        Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -127,7 +121,7 @@ private View view;
 
     public void displayNextAlert(Hike hike) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Hike Created Successfully");
+        builder.setTitle("Do you want to create this Hike?");
         builder .setMessage(
                 "Details \n" +
                         "\nName: " + hike.name + "\n" +
@@ -154,7 +148,6 @@ private View view;
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
     private void saveDataToDatabase(Hike hike) {
         long hike_id = hikeDatabase.hikeDao().insertHike(hike);
         Toast.makeText(requireContext(), "Hike has been saved with ID: " + hike_id, Toast.LENGTH_LONG).show();

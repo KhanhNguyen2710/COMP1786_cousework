@@ -53,14 +53,14 @@ public class SearchFragment extends Fragment {
         adapter = new SearchAdapter(hikes);
         recyclerViewSearch.setAdapter(adapter);
 
-        //  TextWatcher để lắng nghe sự kiện thay đổi trong EditText
+        //  TextWatcher để lắng nghe sự kiện thay đổi
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //  lọc danh sách
+                //  loc
                 filterHikes(charSequence.toString());
             }
             @Override
@@ -73,7 +73,6 @@ public class SearchFragment extends Fragment {
 
     private void filterHikes(String searchText) {
         List<Hike> filteredList = new ArrayList<>();
-
         for (Hike hike : hikes) {
             // Lọc dựa trên tên chuyến đi
             if (hike.name.toLowerCase().contains(searchText.toLowerCase())) {

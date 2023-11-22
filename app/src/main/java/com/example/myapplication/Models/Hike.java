@@ -19,7 +19,5 @@ public class Hike {
     public String length;
     public String level;
     public boolean parkingAvailable;
-
-
 }
 

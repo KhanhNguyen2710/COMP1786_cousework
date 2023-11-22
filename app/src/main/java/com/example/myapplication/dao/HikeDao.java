@@ -20,7 +20,6 @@ public interface HikeDao {
     @Query("SELECT * FROM hike_table ORDER BY name")
     List<Hike> getAllHike();
 
-
     @Query("SELECT * FROM hike_table WHERE hike_id = :hikeId")
     Hike getHikeById(long hikeId);
 

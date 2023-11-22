@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment implements HikeAdapter.OnDeleteClickL
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         view = rootView;
-
         hikeDatabase = Room.databaseBuilder(requireContext(), HikeDatabase.class, "sqlite_example_db")
                 .allowMainThreadQueries() // For simplicity, don't use this in production
                 .build();
@@ -64,10 +63,7 @@ public class HomeFragment extends Fragment implements HikeAdapter.OnDeleteClickL
                 showDeleteAllConfirmationDialog();
             }
         });
-
-
         return rootView;
-
     }
     @Override
     public void onDeleteClick(int position) {
@@ -83,7 +79,6 @@ public class HomeFragment extends Fragment implements HikeAdapter.OnDeleteClickL
                 .setNegativeButton("Cancel", null)
                 .show();
     }
-
 
     //  xóa tất cả dữ liệu
     private void showDeleteAllConfirmationDialog() {
